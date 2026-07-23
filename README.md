@@ -96,6 +96,22 @@ Get a RunAPI API Key at <https://runapi.ai/api_keys>.
 | `glm-4.5` | GLM 4.5 compatibility |
 | `glm-4.5-air` | Lightweight GLM 4.5 requests |
 
+## GLM-5.2 capability contract
+
+| Capability | Current behavior |
+|---|---|
+| Text history, sync, streaming | Supported across Chat, Responses, Messages, and Gemini-compatible requests |
+| Default thinking | Disabled for consistent cross-protocol output |
+| Reasoning controls/content, function tools/history, structured output | Rejected with `unsupported_model_capability` pending model readiness |
+| Hosted tools, explicit cache controls, stateful continuation, protocol-specific controls | Rejected; RunAPI does not currently expose the required protocol surface |
+| Cache/reasoning Usage | Preserved when returned and never inferred; Messages does not expose a caller-visible reasoning-token breakdown |
+| Context window | Estimated input above 1000000 tokens returns `model_limit_exceeded`; full-window execution remains readiness-gated |
+| Maximum output | Values up to 131072 are accepted; larger values return `model_limit_exceeded` before request execution |
+| Multimodal input | Rejected with `unsupported_model_capability` |
+
+The model's 1M context envelope is not a RunAPI execution guarantee. Full-window
+execution remains subject to published readiness.
+
 ## Routing
 
 - GLM API on RunAPI: <https://runapi.ai/models/glm>
@@ -109,8 +125,10 @@ Get a RunAPI API Key at <https://runapi.ai/api_keys>.
   commits or shell history.
 - Stream long responses (`stream: true`) so the agent can release the
   terminal/IO loop early.
-- Keep `glm-5.2` requests text-only. Its initial contract rejects reasoning
-  controls, tools, structured output, and continuation fields.
+- Keep `glm-5.2` requests text-only. Use only text history until the capability
+  table marks an advanced feature ready.
+- Treat cache and reasoning Usage as response facts. Never infer missing token
+  details or assume a cache discount.
 - For pricing, rate-limit, and commercial-usage answers, link to
   <https://runapi.ai/models/glm> rather than this README.
 

@@ -92,15 +92,13 @@ for chunk in stream:
         print(delta, end="", flush=True)
 ```
 
-Streaming runs through a regional edge proxy so the request does not hold a
-Rails/Puma thread. Long generations should always stream.
+Streaming returns partial output as it is generated. Use it for long responses.
 
 ## Protocol compatibility
 
-GLM models are also available through RunAPI's Anthropic-compatible and Gemini
-`contents` client surfaces. RunAPI bridges those request and response shapes to
-the OpenAI-compatible chat request format, so use these protocol paths only when an
-existing agent runtime requires them:
+GLM models are also available through RunAPI's Anthropic-compatible Messages
+and Gemini-compatible `contents` interfaces. Use these protocol paths when an
+existing agent runtime requires their request shapes:
 
 ```bash
 curl -X POST "https://runapi.ai/v1/messages" \
@@ -144,6 +142,22 @@ curl https://runapi.ai/v1/models \
 | `glm-4.5` | GLM 4.5 compatibility |
 | `glm-4.5-air` | Lightweight GLM 4.5 requests |
 
+## GLM-5.2 capability contract
+
+| Capability | Current behavior |
+|---|---|
+| Text history, sync, streaming | Supported across Chat, Responses, Messages, and Gemini-compatible requests |
+| Default thinking | Disabled for consistent cross-protocol output |
+| Reasoning controls/content, function tools/history, structured output | Reject with `unsupported_model_capability`; do not retry without the field silently |
+| Hosted tools, explicit cache controls, stateful continuation, protocol-specific controls | Reject; RunAPI does not currently expose the required protocol surface |
+| Cache/reasoning Usage | Preserve returned fields and never infer omitted details; Messages has no caller-visible reasoning-token breakdown |
+| Context window | Keep estimated input at or below 1000000 tokens; full-window execution remains readiness-gated |
+| Maximum output | Keep the protocol-specific value at or below 131072; larger values return `model_limit_exceeded` before request execution |
+| Multimodal input | Reject with `unsupported_model_capability` |
+
+Do not present the model's 1M context envelope as a RunAPI execution guarantee.
+Full-window execution remains subject to published model readiness.
+
 ## References
 
 - Model overview, pricing, and rate limits: https://runapi.ai/models/glm.md
@@ -156,9 +170,12 @@ curl https://runapi.ai/v1/models \
   inline them in commits or shell history.
 - Default new integrations to the OpenAI-compatible client at
   `https://runapi.ai/v1`.
-- Keep `glm-5.2` requests text-only. RunAPI disables thinking for its initial
-  contract and rejects reasoning controls, tools, structured output, and
-  continuation fields.
+- Keep `glm-5.2` requests text-only. Use only text history until the capability
+  table marks an advanced feature ready.
+- Do not remove a rejected field and retry unless the user explicitly accepts
+  the semantic change.
+- Treat cache and reasoning Usage as response facts. Never infer missing token
+  details or assume a cache discount.
 - Use streaming for responses longer than a few hundred tokens.
 - For pricing, rate-limit, and commercial-usage answers, link to
   https://runapi.ai/models/glm.md rather than copying values.
