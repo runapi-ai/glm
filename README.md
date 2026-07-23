@@ -23,7 +23,7 @@
 
 Call the GLM API through RunAPI with the official OpenAI SDK or any
 OpenAI-compatible client. Point clients at `https://runapi.ai/v1`, send
-`glm-5.1`, `glm-5-turbo`, `glm-5`, `glm-4.7`, `glm-4.6`, `glm-4.5`, or
+`glm-5.2`, `glm-5.1`, `glm-5-turbo`, `glm-5`, `glm-4.7`, `glm-4.6`, `glm-4.5`, or
 `glm-4.5-air`, and pay through one RunAPI balance. This skill teaches Claude
 Code, Codex, Gemini CLI, Cursor, and 50+ agents how to wire GLM requests
 through RunAPI.
@@ -60,7 +60,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="glm-5.1",
+    model="glm-5.2",
     messages=[{"role": "user", "content": "Hello, GLM!"}],
 )
 print(response.choices[0].message.content)
@@ -87,6 +87,7 @@ Get a RunAPI API Key at <https://runapi.ai/api_keys>.
 
 | Model ID | Notes |
 |---|---|
+| `glm-5.2` | Current flagship text workloads |
 | `glm-5.1` | Latest GLM chat workloads |
 | `glm-5-turbo` | Faster GLM chat |
 | `glm-5` | General GLM 5 requests |
@@ -108,6 +109,8 @@ Get a RunAPI API Key at <https://runapi.ai/api_keys>.
   commits or shell history.
 - Stream long responses (`stream: true`) so the agent can release the
   terminal/IO loop early.
+- Keep `glm-5.2` requests text-only. Its initial contract rejects reasoning
+  controls, tools, structured output, and continuation fields.
 - For pricing, rate-limit, and commercial-usage answers, link to
   <https://runapi.ai/models/glm> rather than this README.
 

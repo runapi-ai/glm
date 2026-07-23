@@ -1,6 +1,6 @@
 ---
 name: glm
-description: Call the GLM API (glm-5.1, glm-5-turbo, glm-5, glm-4.7, glm-4.6, glm-4.5, glm-4.5-air) through RunAPI using the official OpenAI SDK or compatible clients. Use when the user asks for GLM chat, streaming completions, Anthropic or Gemini protocol compatibility, or when they want to point an existing OpenAI SDK setup at RunAPI as the base URL.
+description: Call the GLM API (glm-5.2, glm-5.1, glm-5-turbo, glm-5, glm-4.7, glm-4.6, glm-4.5, glm-4.5-air) through RunAPI using the official OpenAI SDK or compatible clients. Use when the user asks for GLM chat, streaming completions, Anthropic or Gemini protocol compatibility, or when they want to point an existing OpenAI SDK setup at RunAPI as the base URL.
 documentation: https://runapi.ai/models/glm.md
 provider_page: https://runapi.ai/providers/z-ai.md
 catalog: https://runapi.ai/models.md
@@ -47,7 +47,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="glm-5.1",
+    model="glm-5.2",
     messages=[{"role": "user", "content": "Summarize this design review."}],
 )
 print(response.choices[0].message.content)
@@ -63,7 +63,7 @@ const client = new OpenAI({
 });
 
 const response = await client.chat.completions.create({
-  model: "glm-5.1",
+  model: "glm-5.2",
   messages: [{ role: "user", content: "Summarize this design review." }],
 });
 ```
@@ -73,7 +73,7 @@ curl -X POST "https://runapi.ai/v1/chat/completions" \
   -H "Authorization: Bearer YOUR_RUNAPI_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "glm-5.1",
+    "model": "glm-5.2",
     "messages": [{"role": "user", "content": "Hello, GLM!"}]
   }'
 ```
@@ -135,6 +135,7 @@ curl https://runapi.ai/v1/models \
 
 | Model ID | Use when |
 |---|---|
+| `glm-5.2` | Current flagship text workloads |
 | `glm-5.1` | Latest GLM chat workloads |
 | `glm-5-turbo` | Faster GLM chat |
 | `glm-5` | General GLM 5 requests |
@@ -155,6 +156,9 @@ curl https://runapi.ai/v1/models \
   inline them in commits or shell history.
 - Default new integrations to the OpenAI-compatible client at
   `https://runapi.ai/v1`.
+- Keep `glm-5.2` requests text-only. RunAPI disables thinking for its initial
+  contract and rejects reasoning controls, tools, structured output, and
+  continuation fields.
 - Use streaming for responses longer than a few hundred tokens.
 - For pricing, rate-limit, and commercial-usage answers, link to
   https://runapi.ai/models/glm.md rather than copying values.
