@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.3.1](https://github.com/runapi-ai/glm/releases/tag/v0.3.1) - 2026-08-10
+
+### Changed
+- Complete marketplace distribution for the RunAPI GLM skill.
+
+
 ## [v0.3.0](https://github.com/runapi-ai/glm/releases/tag/v0.3.0) - 2026-07-23
 
 ### Added
