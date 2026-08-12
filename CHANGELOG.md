@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.3.2](https://github.com/runapi-ai/glm/releases/tag/v0.3.2) - 2026-08-12
+
+### Changed
+- Document GLM authentication, request, result verification, and stop boundaries in the primary recipe, with compatibility protocols loaded only when required.
+
+
 ## [v0.3.1](https://github.com/runapi-ai/glm/releases/tag/v0.3.1) - 2026-08-10
 
 ### Changed
