@@ -2,6 +2,10 @@
 
 Load this reference only for an existing Anthropic Messages or Gemini contents client.
 
+`glm-5.3` is not supported on these compatibility protocols. Use
+OpenAI-compatible Chat Completions for that model, or select an earlier model
+whose current RunAPI capability contract supports the required protocol.
+
 For Messages, use base URL `https://runapi.ai`, a RunAPI key, a supported exact
 model ID, `max_tokens`, and text messages. Verify final content, `stop_reason`,
 and `usage`; streaming ends at `message_stop`.

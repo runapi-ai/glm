@@ -23,10 +23,10 @@
 
 Call the GLM API through RunAPI with the official OpenAI SDK or any
 OpenAI-compatible client. Point clients at `https://runapi.ai/v1`, send
-`glm-5.2`, `glm-5.1`, `glm-5-turbo`, `glm-5`, `glm-4.7`, `glm-4.6`, `glm-4.5`, or
-`glm-4.5-air`, and pay through one RunAPI balance. This skill teaches Claude
-Code, Codex, Gemini CLI, Cursor, and 50+ agents how to wire GLM requests
-through RunAPI.
+`glm-5.3`, `glm-5.2`, `glm-5.1`, `glm-5-turbo`, `glm-5`, `glm-4.7`, `glm-4.6`,
+`glm-4.5`, or `glm-4.5-air`, and pay through one RunAPI balance. This skill
+teaches Claude Code, Codex, Gemini CLI, Cursor, and 50+ agents how to wire GLM
+requests through RunAPI.
 
 The canonical agent file is `skills/glm/SKILL.md`.
 
@@ -60,7 +60,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="glm-5.2",
+    model="glm-5.3",
     messages=[{"role": "user", "content": "Hello, GLM!"}],
 )
 print(response.choices[0].message.content)
@@ -87,7 +87,8 @@ Get a RunAPI API Key at <https://runapi.ai/api_keys>.
 
 | Model ID | Notes |
 |---|---|
-| `glm-5.2` | Current flagship text workloads |
+| `glm-5.3` | Latest text workloads through Chat Completions |
+| `glm-5.2` | Cross-protocol flagship text workloads |
 | `glm-5.1` | Latest GLM chat workloads |
 | `glm-5-turbo` | Faster GLM chat |
 | `glm-5` | General GLM 5 requests |
@@ -95,6 +96,15 @@ Get a RunAPI API Key at <https://runapi.ai/api_keys>.
 | `glm-4.6` | Stable GLM 4.6 requests |
 | `glm-4.5` | GLM 4.5 compatibility |
 | `glm-4.5-air` | Lightweight GLM 4.5 requests |
+
+## GLM-5.3 capability contract
+
+| Capability | Current behavior |
+|---|---|
+| Text history, sync, streaming | Supported through OpenAI-compatible Chat Completions |
+| OpenAI Responses, Anthropic Messages, Gemini contents | Not supported for `glm-5.3` |
+| Tools, reasoning controls, structured output, multimodal input | Not declared pending model-specific evidence |
+| Usage | Returned input, output, and cache token details are preserved and never inferred |
 
 ## GLM-5.2 capability contract
 
@@ -125,8 +135,9 @@ execution remains subject to published readiness.
   commits or shell history.
 - Stream long responses (`stream: true`) so the agent can release the
   terminal/IO loop early.
-- Keep `glm-5.2` requests text-only. Use only text history until the capability
-  table marks an advanced feature ready.
+- Keep `glm-5.3` requests on OpenAI-compatible Chat Completions with text
+  history. Use an advanced feature or another protocol only when the
+  model-specific capability table marks it ready.
 - Treat cache and reasoning Usage as response facts. Never infer missing token
   details or assume a cache discount.
 - For pricing, rate-limit, and commercial-usage answers, link to

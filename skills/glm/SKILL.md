@@ -1,6 +1,6 @@
 ---
 name: glm
-description: Call the GLM API (GLM 5 and 4 series) through RunAPI using OpenAI-compatible Chat Completions. Use for GLM text chat, streaming, or an existing compatibility client that needs the conditional reference.
+description: Call the GLM API (GLM 5.3 and earlier GLM 5 and 4 series) through RunAPI using OpenAI-compatible Chat Completions. Use for GLM text chat, streaming, or an existing compatibility client that needs the conditional reference.
 documentation: https://runapi.ai/models/glm.md
 provider_page: https://runapi.ai/providers/z-ai.md
 catalog: https://runapi.ai/models.md
@@ -31,7 +31,7 @@ Set `OPENAI_API_KEY` to a RunAPI API key and `OPENAI_BASE_URL` to `https://runap
 from openai import OpenAI
 client = OpenAI(api_key="YOUR_RUNAPI_TOKEN", base_url="https://runapi.ai/v1")
 response = client.chat.completions.create(
-    model="glm-5.2",
+    model="glm-5.3",
     messages=[{"role": "user", "content": "Summarize this review."}],
 )
 print(response.choices[0].message.content)
@@ -50,19 +50,31 @@ Require final assistant content, a terminal `finish_reason`, and authoritative
 
 Correct a rejected shape once using the structured error. Retry transport once
 only before any response or Usage and when replay is safe. Record a terminal
-error and stop without changing model or protocol. For `glm-5.2`, start with
-text history; add tools, reasoning, structured output, or multimodal input only
-when the current RunAPI contract explicitly verifies that capability.
+error and stop without changing model or protocol. For `glm-5.3`, keep requests
+to text history on Chat Completions. Add tools, reasoning, structured output, or
+multimodal input only when the current RunAPI contract explicitly verifies that
+capability.
 
 ## Compatibility protocols
 
-Load [compatibility protocols](references/compatibility-protocols.md) only when an existing client requires Anthropic Messages or Gemini contents.
+Do not use compatibility protocols with `glm-5.3`; use the primary recipe.
+Load [compatibility protocols](references/compatibility-protocols.md) only when an existing client requires Anthropic Messages or Gemini contents for an earlier compatible model.
+
+## GLM-5.3 capability boundary
+
+| Capability | Current behavior |
+|---|---|
+| Text history, sync, streaming | Supported through OpenAI-compatible Chat Completions |
+| OpenAI Responses, Anthropic Messages, Gemini contents | Not supported for `glm-5.3` |
+| Tools, reasoning controls, structured output, multimodal input | Not declared pending model-specific evidence |
+| Usage | Preserve returned token and cache fields; never infer missing details |
 
 ## Supported models
 
 | Model ID | Use when |
 |---|---|
-| `glm-5.2` | Current flagship text workloads |
+| `glm-5.3` | Latest text workloads through Chat Completions |
+| `glm-5.2` | Cross-protocol flagship text workloads |
 | `glm-5.1` | Recent GLM chat workloads |
 | `glm-5-turbo` | Faster GLM chat |
 | `glm-5` | General GLM 5 requests |

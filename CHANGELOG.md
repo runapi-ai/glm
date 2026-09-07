@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.3.3](https://github.com/runapi-ai/glm/releases/tag/v0.3.3) - 2026-09-07
+
+### Added
+- Document glm-5.3 text and streaming requests through OpenAI-compatible Chat Completions.
+
+
 ## [v0.3.2](https://github.com/runapi-ai/glm/releases/tag/v0.3.2) - 2026-08-12
 
 ### Changed
