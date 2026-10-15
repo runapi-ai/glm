@@ -23,8 +23,8 @@
 
 Call the GLM API through RunAPI with the official OpenAI SDK or any
 OpenAI-compatible client. Point clients at `https://runapi.ai/v1`, send
-`glm-5.3`, `glm-5.2`, `glm-5.1`, `glm-5-turbo`, `glm-5`, `glm-4.7`, `glm-4.6`,
-`glm-4.5`, or `glm-4.5-air`, and pay through one RunAPI balance. This skill
+`glm-5.3`, `glm-5.3-flash`, `glm-5.2`, `glm-5.1`, `glm-5-turbo`, `glm-5`, `glm-4.7`,
+`glm-4.6`, `glm-4.5`, or `glm-4.5-air`, and pay through one RunAPI balance. This skill
 teaches Claude Code, Codex, Gemini CLI, Cursor, and 50+ agents how to wire GLM
 requests through RunAPI.
 
@@ -88,6 +88,7 @@ Get a RunAPI API Key at <https://runapi.ai/api_keys>.
 | Model ID | Notes |
 |---|---|
 | `glm-5.3` | Latest text workloads through Chat Completions |
+| `glm-5.3-flash` | Text-only Chat Completions, Responses, Anthropic Messages, and Gemini contents; image, video, and file input and hosted tools are rejected |
 | `glm-5.2` | Cross-protocol flagship text workloads |
 | `glm-5.1` | Latest GLM chat workloads |
 | `glm-5-turbo` | Faster GLM chat |

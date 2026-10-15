@@ -74,6 +74,7 @@ Load [compatibility protocols](references/compatibility-protocols.md) only when 
 | Model ID | Use when |
 |---|---|
 | `glm-5.3` | Latest text workloads through Chat Completions |
+| `glm-5.3-flash` | Lower-cost text-only requests on every protocol; image, video, and file input are rejected |
 | `glm-5.2` | Cross-protocol flagship text workloads |
 | `glm-5.1` | Recent GLM chat workloads |
 | `glm-5-turbo` | Faster GLM chat |

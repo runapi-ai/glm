@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.3.4](https://github.com/runapi-ai/glm/releases/tag/v0.3.4) - 2026-10-15
+
+### Added
+- The supported model table now lists glm-5.3-flash for text-only requests through Chat Completions, OpenAI Responses, Anthropic Messages and Gemini contents; image, video and file input are rejected.
+
+
 ## [v0.3.3](https://github.com/runapi-ai/glm/releases/tag/v0.3.3) - 2026-09-07
 
 ### Added
